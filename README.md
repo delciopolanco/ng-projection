@@ -1,27 +1,69 @@
-# NgProyection
+# NgProjection
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.11.
+Simple example of how [Angular Single content Projection](https://angular.io/guide/content-projection) Works!. 
 
-## Development server
+**Definition**: With this type of content projection, a component accepts content from a single source.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+We will show the behavior of this angular characteristic, by using a "burger scenario" in which we have to add some ingredients to our burger in a dynamic way, this can help us to create reusable components in our apps. 🙂
 
-## Code scaffolding
+1. Defining Parent [burger.component.html]
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```html
+<div class="burger">
+  <ng-content> <!-- Here children component will render --> </ng-content> 
+</div>
 
-## Build
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+2. Defining Children [app.component.html]
 
-## Running unit tests
+```html
+<app-burger>
+  <app-cheese><!--I was render inside app-burger--></app-cheese>
+  <app-meat><!--I was render inside app-burger--></app-meat>
+  <app-lettuce><!--I was render inside app-burger--></app-lettuce>
+</app-burger>
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```
 
-## Running end-to-end tests
+3. Defining Controls to add or remove our ingredient [app.component.html]
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```html
 
-## Further help
+<div class="controls">
+  <button (click)="addIngredient('cheese')" [class.active]="cheese">Add Cheese</button>
+  <button (click)="addIngredient('meat')" [class.active]="meat">Add Meat</button>
+  <button (click)="addIngredient('lettuce')" [class.active]="lettuce">Add Lettuce</button>
+</div>
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+<app-burger>
+  <app-cheese *ngIf="cheese"></app-cheese>
+  <app-meat *ngIf="meat"></app-meat>
+  <app-lettuce *ngIf="lettuce"></app-lettuce>
+</app-burger>
+
+```
+
+4. Our App Component  [app.component.ts]
+
+```javascript
+
+export class AppComponent {
+  cheese: boolean = false;
+  lettuce: boolean = false;
+  meat: boolean = false;
+
+  addIngredient(ingredient: 'cheese' | 'lettuce' | 'meat'): void {
+    this[ingredient] = !this[ingredient];
+  }
+}
+
+
+```
+
+5. See in action!
+
+![burger-content-projection](burger.gif "Burger")
+
+
+> This project uses part of the css in this repository [lesscake/cheeseburger-css-div](https://github.com/lesscake/cheeseburger-css-div), thanks to @github/lesscake for this beautifull hamburger css.
