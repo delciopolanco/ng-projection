@@ -1,0 +1,36 @@
+//
+.burger {
+  /* Same as previously */
+  /* We just removed the background color */
+  width: 380px;
+  height: 40px;
+  border-radius: 15px;
+  position: relative;
+
+  &:before {
+    content: "";
+    white-space: pre;
+    display: block;
+    width: 400px;
+    height: 55px;
+    border-top: 80px solid #f5b230;
+    border-bottom: 50px solid #f5b230;
+    border-radius: 30% 30% 20% 20%;
+  }
+
+  &:after {
+    /* Keep same code as before */
+    content: "";
+    display: block;
+    width: 10px;
+    height: 6px;
+    border-radius: 40%;
+
+    /* Add new box-shadow */
+    box-shadow:
+      /* Top row */ 100px -165px #ffffff, 160px -165px #ffffff,
+      230px -165px #ffffff, 290px -165px #ffffff,
+      /* Bottom row */ 60px -135px #ffffff, 125px -135px #ffffff,
+      190px -135px #ffffff, 255px -135px #ffffff, 330px -135px #ffffff;
+  }
+}
